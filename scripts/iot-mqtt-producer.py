@@ -5,6 +5,7 @@ import sys
 import random
 from awscrt import io, mqtt, auth, http
 from awsiot import mqtt_connection_builder
+from kafka import KafkaProducer
 
 topic = "streaming-data"
 client_id = "raspberrypi"
@@ -80,9 +81,11 @@ def collect_and_send_data():
             topic=topic,
             payload=json.dumps(message),
             qos=mqtt.QoS.AT_LEAST_ONCE)
+        
         time.sleep(1)
         publish_count += 1
-
+        
+    
 
 if __name__ == '__main__':
     # Spin up resources
