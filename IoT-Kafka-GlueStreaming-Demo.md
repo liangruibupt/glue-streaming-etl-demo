@@ -4,7 +4,7 @@
 
 Archiecture
 
-! [serverless-etl-diagram-kafka](media/serverless-etl-diagram-kafka.png)
+![serverless-etl-diagram-kafka](media/serverless-etl-diagram-kafka.png)
 
 # Create Kafka cluster
 1. Security group `kafka-sg` and ingress rule
