@@ -20,7 +20,11 @@ Archiecture for kinesis-kafka-connector
 
 2. Create Kinesis Data Steam `iot-data-stream` with 1 shard
 
-3. `git clone https://github.com/JoeShi/kinesis-kafka-connector.git` to one EC2
+3. Clone the project to one EC2
+```bash
+git clone https://github.com/JoeShi/kinesis-kafka-connector.git
+git checkout cn-region-support
+``` 
 
 4. Building the project
 ```bash
