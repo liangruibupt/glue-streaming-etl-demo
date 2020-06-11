@@ -46,7 +46,10 @@ For security group and VPC setting, please check [Setting Up a VPC to Connect to
 
 2. Create the ETL job `mysql8_catalog_sales`
 
+![mysql8.0-etl-job-catalog_sales](media/mysql8.0-etl-job-catalog_sales.png)
+
 Add the Job Parameters
+
 ```json
 {
     "--tablename":"catalog_sales",
@@ -55,22 +58,30 @@ Add the Job Parameters
     "--dburl":"jdbc:mysql://$mysqlhost:3306/testdb",
     "--jdbcS3path":"s3://xxxx/mysqljdbc/",
     "--s3OutputPath":"s3://xxx/mysql8_ingest/"
-jdbc:mysql://mysql8.ckghkggpkoby.rds.cn-north-1.amazonaws.com.cn:3306/testdb
-s3://ray-glue-streaming/mysqljdbc/
-s3://ray-glue-streaming/mysql8_ingest/
-Dbadmin123456_
 }
 ```
 
+![mysql8.0-etl-job-catalog_sales-parameter](media/mysql8.0-etl-job-catalog_sales-parameter.png)
+
 2. Download the mysql-connector-java-8.0.17.jar，upload to jdbcS3path specified S3 path
+
+![mysql8.0-etl-job-catalog_sales-source](media/mysql8.0-etl-job-catalog_sales-source.png)
+
+![mysql8.0-etl-job-catalog_sales-target](media/mysql8.0-etl-job-catalog_sales-target.png)
 
 3. Edit the ETL job script
 [glue-etl-connect-paramters and sample etl script](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html)
 
 Sample [catalog_sales_etl.py](scripts/catalog_sales_etl.py)
 
+**Important: Make sure you select the connection `mysql8.0` you created**
+
+![mysql8.0-etl-job-catalog_sales-h.png](media/mysql8.0-etl-job-catalog_sales-h.png)
+
 4. Create the similar ETL job `mysql8_warehouse`
+
 Add the Job Parameters
+
 ```json
 {
     "--tablename":"warehouse",
@@ -79,14 +90,61 @@ Add the Job Parameters
     "--dburl":"jdbc:mysql://$mysqlhost:3306/testdb",
     "--jdbcS3path":"s3://xxxx/mysqljdbc/",
     "--s3OutputPath":"s3://xxx/mysql8_ingest/"
-jdbc:mysql://mysql8.ckghkggpkoby.rds.cn-north-1.amazonaws.com.cn:3306/testdb
-s3://ray-glue-streaming/mysqljdbc/
-s3://ray-glue-streaming/mysql8_ingest/
-Dbadmin123456_
 }
 ```
 
-### Tuning for JDBC read parallelism (Optional)
+Sample [warehourse_etl.py](scripts/warehourse_etl.py)
+
+## Set up the Crawler and populate the table metadata in the AWS Glue Data Catalog for the S3 parquet file ingested from MySQL8.0 tables. 
+
+After the data stored on S3, the table structure in the database is lost. The crawling program generate the table structure of the data in S3 and enables other programs such as Apache Presto or Amazon Athena to directly query the data in S3. 
+
+Configure a crawler to crawl the data structures of `catalog_sales` and `warehouse`.
+
+![mysql8.0-warehourse_catalog_sales-crawler](media/mysql8.0-warehourse_catalog_sales-crawler.png)
+
+![mysql8.0-warehourse_catalog_sales-crawler2](media/mysql8.0-warehourse_catalog_sales-crawler2.png)
+
+You can see two tables in the Glue data directory after running the crawl program and successfully
+
+![mysql8.0-warehourse_catalog_sales-crawler-tables](media/mysql8.0-warehourse_catalog_sales-crawler-tables.png)
+
+## Create an aggregation job, join two tables to generate an aggregate table for querying the report `warehourse_catalog_sales_join_etl`
+
+1. Run the SQL on Athena to make sure query successful
+```bash
+select w_warehouse_name, w_city,count(*) as cnt_sales, sum(cs_list_price) as total_revenue,sum(cs_net_profit_double) as total_net_profit,sum(cs_wholesale_cost) as total_cost from mysql_ingest.catalog_sales join mysql_ingest.warehouse on cs_warehouse_sk = w_warehouse_sk group by w_warehouse_name, w_city
+```
+
+2. Create the `warehourse_catalog_sales_join_etl` job
+
+![mysql8.0-etl-job-join](media/mysql8.0-etl-job-join.png)
+
+Add the Job Parameters
+
+```json
+{
+    "--s3OutputPath":"s3://xxx/mysql8_ingest/"
+}
+```
+
+Sample [warehourse_catalog_sales_join_etl.py](scripts/warehourse_catalog_sales_join_etl.py)
+
+![mysql8.0-etl-job-join-parameter](media/mysql8.0-etl-job-join-parameter.png)
+
+## Create Glue Workflow
+
+If you need to deal with the dependencies between tasks for complex data processing processes. Glue's workflow function can solve upstream and downstream dependencies and timing issues.
+
+1. Create the Workflow
+![mysql8.0-create-workflow](media/mysql8.0-create-workflow.png)
+
+![mysql8.0-workflow](media/mysql8.0-workflow.png)
+
+2. Run the Workflow
+![mysql8.0-workflow-status](media/mysql8.0-workflow-status.png)
+
+## Tuning for JDBC read parallelism (Optional)
 
 In some cases, running an AWS Glue ETL job over a large database table results in out-of-memory (OOM) errors because all the data is read into a single executor. To avoid this situation, you can optimize the number of Apache Spark partitions and parallel JDBC connections that are opened during the job execution.
 

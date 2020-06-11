@@ -179,6 +179,18 @@ SELECT shipmt_id, orig_state, dest_state, quarter FROM "mysql_ingest"."cfs_parqu
 
 ![mysql5.7-cfs-parquet-athena](media/mysql5.7-cfs-parquet-athena.png)
 
+## Tuning for JDBC read parallelism (Optional)
+
+In some cases, running an AWS Glue ETL job over a large database table results in out-of-memory (OOM) errors because all the data is read into a single executor. To avoid this situation, you can optimize the number of Apache Spark partitions and parallel JDBC connections that are opened during the job execution.
+
+After crawling a database table, follow these steps to tune the parameters.
+
+In the Data Catalog, edit the table and add the partitioning parameters `hashexpression` or `hashfield`. 
+
+- hashexpression: If your database table contains a column with numeric values such as a unique ID or similar data, choose the column name for a parameter hashexpression. 
+- hashfield: If no suitable numeric column is available, find a column containing string values with a good even distribution (high cardinality), and choose the column name for a parameter hashfield.
+- hashpartitions: Provide a value of hashpartition as a number. By default, this value is set to 7. This parameter determines the number of Spark partitions and the resulting number of JDBC connections opened to the target database.
+
 # Reference
 [How to access and analyze on-premises data stores using AWS Glue](https://aws.amazon.com/blogs/big-data/how-to-access-and-analyze-on-premises-data-stores-using-aws-glue/)
 

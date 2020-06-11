@@ -6,10 +6,13 @@ from awsglue.context import GlueContext
 from awsglue.job import Job
 import time
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType
+import logging
 
 sc = SparkContext()
 glueContext = GlueContext(sc)
 spark = glueContext.spark_session
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 args = getResolvedOptions(sys.argv, [
                           'tablename', 'dbuser', 'dbpassword', 'dburl', 'jdbcS3path', 's3OutputPath'])
@@ -22,6 +25,7 @@ connection_mysql8_options = {
     #You need upload to S3
     "customJdbcDriverS3Path": args['jdbcS3path']+"mysql-connector-java-8.0.17.jar",
     "customJdbcDriverClassName": "com.mysql.cj.jdbc.Driver"}
+logger.info(connection_mysql8_options)
 
 # Read from JDBC databases with custom driver
 df_warehouse = glueContext.create_dynamic_frame.from_options(
