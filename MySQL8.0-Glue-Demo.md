@@ -1,4 +1,4 @@
-# Glue ingest MySQL5.7 via Glue connector
+# Glue ingest MySQL8.0 via Glue connector
 
 ## Prepare the RDS MySQL connection
 MySQL 8.0.17
