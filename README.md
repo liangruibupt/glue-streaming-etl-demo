@@ -22,6 +22,10 @@ Please find more details in [Adding Streaming ETL Jobs in AWS Glue guide](https:
 
 # Glue ingest the RDS data
 
+Architeture
+
+![mysql-glue](media/mysql-glue.png)
+
 [Glue ingest MySQL5.7 via Glue connector](MySQL5.7-Glue-Demo.md)
 
 [Glue ingest MySQL8.0 via Glue connector](MySQL8.0-Glue-Demo.md)

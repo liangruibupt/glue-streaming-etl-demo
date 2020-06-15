@@ -1,5 +1,9 @@
 # Glue ingest MySQL5.7 via Glue connector
 
+Architeture
+
+![mysql-glue](media/mysql-glue.png)
+
 ## Prepare the RDS MySQL connection
 RDS MySQL 5.7.22
 

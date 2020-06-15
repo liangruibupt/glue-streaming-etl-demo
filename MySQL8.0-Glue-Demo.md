@@ -1,5 +1,9 @@
 # Glue ingest MySQL8.0 via Glue connector
 
+Architeture
+
+![mysql-glue](media/mysql-glue.png)
+
 ## Prepare the RDS MySQL connection
 MySQL 8.0.17
 
