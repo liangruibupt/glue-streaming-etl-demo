@@ -1,6 +1,7 @@
-# glue-streaming-etl-demo
+# AWS serverless etl and streaming demo
 
-This repo is shown how to use the Glue Streaming feature to Manage continuous ingestion pipelines and processing data on-the-fly. The Glue Steaming Jobs is extending AWS Glue jobs, based on Apache Spark, to run continuously and consume data from streaming platforms such as Amazon Kinesis Data Streams and Apache Kafka (including the fully-managed Amazon MSK).
+## Glue Streaming ETL Demo
+This demo is shown how to use the Glue Streaming feature to Manage continuous ingestion pipelines and processing data on-the-fly. The Glue Steaming Jobs is extending AWS Glue jobs, based on Apache Spark, to run continuously and consume data from streaming platforms such as Amazon Kinesis Data Streams and Apache Kafka (including the fully-managed Amazon MSK).
 
 Glue can provision, manage, and scale the infrastructure to ingest data to data lakes on Amazon S3, data warehouses such as Amazon Redshift, or store streaming data in a DynamoDB table for quick lookups, or in Elasticsearch to look for specific operation patterns.
 
@@ -20,7 +21,21 @@ Please find more details in [Adding Streaming ETL Jobs in AWS Glue guide](https:
 
 ![kinesis-kafka-connector](media/kinesis-kafka-connector.png)
 
-# Glue ingest the RDS data
+## Kinesis Data Anlytics Streaming Demo
+
+This demo is shown how to use the Kinesis Data Anlytics to Manage continuous ingestion pipelines and processing data on-the-fly. Kinesis Data Anlytics can help you run continuously and consume data from streaming platforms such as Amazon Kinesis Data Streams and Apache Kafka (including the fully-managed Amazon MSK).
+
+[IoT-Kinesis-KinesisDataAnlytics-Demo](IoT-Kinesis-KinesisDataAnlytics-Demo.md)
+
+![kinesis-kda-demo](media/kinesis-kda-demo.png)
+
+[IoT-Kafka-KinesisDataAnlytics-Demo](IoT-Kafka-KinesisDataAnlytics-Demo.md)
+
+![kafka-kda-demo](media/kafka-kda-demo.png)
+
+## Glue ingest the RDS data
+
+This demo is shown how to use the Glue to ingest data from RDS database.
 
 Architeture
 
