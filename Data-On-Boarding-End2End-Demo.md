@@ -9,7 +9,7 @@
 
 Architeture
 
-![mysql-glue](media/mysql-glue.png)
+![end2end-data-onboarding](media/end2end-data-onboarding.png)
 
 ## Prepare the RDS MySQL connection
 RDS MySQL 5.7.26
