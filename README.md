@@ -47,4 +47,6 @@ Architeture
 
 ## Data-On-Boarding-End2End-Demo
 
+![end2end-data-onboarding](media/end2end-data-onboarding.png)
+
 [Data On Boarding End2End Demo](Data-On-Boarding-End2End-Demo.md)
