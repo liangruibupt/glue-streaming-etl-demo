@@ -150,3 +150,23 @@ SELECT * FROM "mysql_ingest"."bmw_pricing_challenge_parquet_demo2ebc" limit 10;
 ![mysql5.7demo2ebc-sementic-athena](media/mysql5.7demo2ebc-sementic-athena.png)
 
 ## Consumer can use the Tableau for virtualization
+
+- Use the Tableau Desktop to connect to the Athena. The guideline [connect Tableau to Amazon Athena](https://help.tableau.com/current/pro/desktop/en-us/examples_amazonathena.htm)
+
+- Create the [Customize JDBC connections for China region Athena](https://kb.tableau.com/articles/howto/Customizing-JDBC-Connections)
+
+  1. Create a properties file called athena.properties.
+  2. Save the file to the My Tableau Repository\Datasources directory.
+  3. Add the key-value pair: `EndpointOverride=athena.cn-northwest-1.amazonaws.com.cn:443` for Ningxia region or `EndpointOverride=athena.cn-north-1.amazonaws.com.cn:443` for Beijing region
+  4. Save the file.
+
+- The data source
+
+You can create the connection, from the connection you can select the Catalog, Database (From Glue Catalog) and Tables (From Glue Catalog)
+
+![mysql5.7demo2ebc-tableau-datasource](media/mysql5.7demo2ebc-tableau-datasource.png)
+
+
+- The dashboard
+
+![mysql5.7demo2ebc-tableau](media/mysql5.7demo2ebc-tableau.png)
