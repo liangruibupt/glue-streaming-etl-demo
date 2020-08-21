@@ -31,14 +31,14 @@ CREATE TABLE `catalog_sales`(
   `cs_ext_sales_price` double, 
   `cs_ext_wholesale_cost` double, 
   `cs_ext_list_price` double, 
-  `cs_ext_tax double` double, 
+  `cs_ext_tax_double` double, 
   `cs_coupon_amt` double, 
   `cs_ext_ship_cost` double, 
   `cs_net_paid` double, 
   `cs_net_paid_inc_tax` double, 
   `cs_net_paid_inc_ship` double, 
   `cs_net_paid_inc_ship_tax` double, 
-  `cs_net_profit double` double,
+  `cs_net_profit_double` double,
   PRIMARY KEY ( `cs_item_sk`,`cs_order_number` ));
 
 /*Table structure for table `warehouse` */
