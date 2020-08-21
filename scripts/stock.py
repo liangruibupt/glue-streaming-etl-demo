@@ -6,7 +6,7 @@ import datetime
 kinesis = boto3.client('kinesis')
 
 
-def getReferrer(count):
+def getReferrer():
     data = {}
     now = datetime.datetime.now()
     str_now = now.isoformat()
@@ -14,13 +14,11 @@ def getReferrer(count):
     data['TICKER'] = random.choice(['AAPL', 'AMZN', 'MSFT', 'INTC', 'TBV'])
     price = random.random() * 100
     data['PRICE'] = round(price, 2)
-    data['ID'] = count
     return data
 
 
-count = 0
 while True:
-    data = json.dumps(getReferrer(count))
+    data = json.dumps(getReferrer())
     count += 1
     print(data)
     kinesis.put_record(
