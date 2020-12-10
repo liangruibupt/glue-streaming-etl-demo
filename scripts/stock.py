@@ -17,6 +17,7 @@ def getReferrer():
     return data
 
 
+count = 0
 while True:
     data = json.dumps(getReferrer())
     count += 1
@@ -25,3 +26,5 @@ while True:
         StreamName="ExampleInputStream",
         Data=data,
         PartitionKey="partitionkey")
+    if(count>1000):
+        break

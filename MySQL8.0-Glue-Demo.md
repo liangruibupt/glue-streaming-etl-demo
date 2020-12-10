@@ -38,6 +38,23 @@ For security group and VPC setting, please check [Setting Up a VPC to Connect to
 
 **But we can use specify the MySQL8.0 JDBC in ETL Job**. [Bring your own JDBC drivers to your Glue Spark ETL jobs](https://aws.amazon.com/about-aws/whats-new/2019/11/aws-glue-now-enables-you-to-bring-your-own-jdbc-drivers-to-your-glue-spark-etl-jobs/)
 
+[Connection Types and Options for ETL in AWS Glue ](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html#aws-glue-programming-etl-connect-jdbc)
+
+For example, Oracle 18
+
+```
+connection_oracle18_options = {
+    "url": "jdbc:oracle:thin:@//<jdbc-host-name>:1521/ORCL",
+    "dbtable": "test",
+    "user": "admin",
+    "password": "pwd",
+    "customJdbcDriverS3Path": "s3://path/ojdbc10.jar",
+    "customJdbcDriverClassName": "oracle.jdbc.OracleDriver"}
+
+df_oracle18 = glueContext.create_dynamic_frame.from_options(connection_type="oracle",
+connection_options=connection_oracle18_options)
+```
+
 ![mysql8.0-connection-test](media/mysql8.0-connection-test.png)
 
 4. Create Glue sample database `mysql_ingest`
