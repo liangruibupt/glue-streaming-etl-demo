@@ -50,3 +50,7 @@ Architeture
 ![end2end-data-onboarding](media/end2end-data-onboarding.png)
 
 [Data On Boarding End2End Demo](Data-On-Boarding-End2End-Demo.md)
+
+## Python Code send record to S3 via Kinesis Firehose
+![python-firehose-arch](media/python-firehose-arch.png)
+[Pyhton-Send-Data-Firefose Demo](Pyhton-Send-Data-Firefose.md)
