@@ -5,7 +5,7 @@ import sys
 import random
 from awscrt import io, mqtt, auth, http
 from awsiot import mqtt_connection_builder
-from kafka import KafkaProducer
+from kafka import KafkaProducer, KafkaConsumer
 
 topic = "streaming-data"
 client_id = "raspberrypi"
@@ -48,12 +48,22 @@ def collect_and_send_data():
         publish_count += 1
 
 def kafka_producer(message):
-    producer = KafkaProducer(bootstrap_servers=['b-2.mskworkshopcluster.8bx5lx.c4.kafka.cn-north-1.amazonaws.com.cn:9092','b-1.mskworkshopcluster.8bx5lx.c4.kafka.cn-north-1.amazonaws.com.cn:9092'], 
-    value_serializer=lambda m: json.dumps(m).encode('utf-8'))
-    #producer = KafkaProducer(bootstrap_servers=['b-1.mskworkshopcluster.8bx5lx.c4.kafka.cn-north-1.amazonaws.com.cn:9094','b-2.mskworkshopcluster.8bx5lx.c4.kafka.cn-north-1.amazonaws.com.cn:9094'], 
-    #value_serializer=lambda m: json.dumps(m).encode('utf-8'),
-    #security_protocol = 'SSL', ssl_certfile = '/home/ec2-user/kafka/ssl/private/kafka.client.truststore.jks',
-    #ssl_keyfile = '/home/ec2-user/kafka/ssl/private/kafka.client.keystore.jks')
+    consumer = KafkaConsumer(bootstrap_servers='ip-172-31-33-0.cn-north-1.compute.internal:9094',
+                            security_protocol='SSL',
+                            ssl_check_hostname=False,
+                            ssl_cafile='/home/ec2-user/kafka/ssl/private/CARoot.pem',
+                            ssl_certfile='/home/ec2-user/kafka/ssl/private/certificate.pem',
+                            ssl_keyfile='/home/ec2-user/kafka/ssl/private/key.pem',
+                            ssl_password='Password')
+
+    producer = KafkaProducer(bootstrap_servers='ip-172-31-33-0.cn-north-1.compute.internal:9094',
+                            value_serializer=lambda m: json.dumps(m).encode('utf-8'), 
+                            security_protocol='SSL',
+                            ssl_check_hostname=False,
+                            ssl_cafile='/home/ec2-user/kafka/ssl/private/CARoot.pem',
+                            ssl_certfile='/home/ec2-user/kafka/ssl/private/certificate.pem',
+                            ssl_keyfile='/home/ec2-user/kafka/ssl/private/key.pem',
+                            ssl_password='Password')
     
     future = producer.send('AWSKafkaTutorialTopic' ,  value= message, partition= 0)
     future.get(timeout= 10)
