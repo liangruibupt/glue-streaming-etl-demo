@@ -12,6 +12,10 @@ Archiecture for IoT-Athena-QuickSight
 - Kinesis Firehose Delivery Steam Name: `IoT-to-BI-Example`
 - S3 Bucket: `your bucket`
 - S3 Prefix: `iot_to_bi_example/`
+- Convert record format from json to Glue automatically
+![iot-athen-quicksight-convert-glue](media/iot-athen-quicksight-convert-glue.png)
+- Buffer conditions: `64 MiB or 300 seconds`
+
 
 ## Configuring the AWS IoT rule
 - Name: `Iot_to_bi_demoRule`
@@ -36,24 +40,24 @@ python hearrate.py
 ## Configuring Athena
 1. Create a table using the following query
 ```sql
-CREATE EXTERNAL TABLE heartrate_iot_data (
+CREATE EXTERNAL TABLE `heartrate_iot_data`(
     heartRate int,
     userId string,
     rateType string,
     dateTime timestamp)
-ROW FORMAT  serde 'org.apache.hive.hcatalog.data.JsonSerDe'
-with serdeproperties( 'ignore.malformed.json' = 'true' )
-LOCATION 's3://<CREATED-BUCKET>/iot_to_bi_example/'
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe' 
+LOCATION 's3://<CREATED-BUCKET>/iot_to_bi_example/';
+
 ```
 
 2. Create the query
 ```sql
-# count the user heart rate data
-SELECT userid, COUNT(userid) FROM heartrate_iot_data GROUP BY userid
+# preview data
+SELECT userid, rateType, heartRate, dateTime FROM heartrate_iot_data limit 20;
 
-# Create View
-CREATE OR REPLACE VIEW "hearrate_iot_info" AS
-SELECT userid, rateType, COUNT(userid) as record_count FROM heartrate_iot_data GROUP BY userid, rateType
+# count the user heart rate data
+SELECT userid, rateType， COUNT(userid) FROM heartrate_iot_data GROUP BY userid，rateType
 ```
 
 ## Analyzing the data on QuickSight
