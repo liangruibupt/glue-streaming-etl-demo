@@ -54,3 +54,9 @@ Architeture
 ## Python Code send record to S3 via Kinesis Firehose
 ![python-firehose-arch](media/python-firehose-arch.png)
 [Pyhton-Send-Data-Firefose Demo](Pyhton-Send-Data-Firefose.md)
+
+## IoT-Athena-QuickSight
+
+Build a business intelligence capability for streaming IoT device data using AWS IoT Core, Amazon Firehose, Amazon S3, Amazon Athena and Amazon QuickSight
+
+![iot-athen-quicksight-achitect](media/iot-athen-quicksight-achitect.png)

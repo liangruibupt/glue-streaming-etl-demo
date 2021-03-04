@@ -11,7 +11,7 @@
    - Protocol: TCP port 2181 from all sources
    - Protocol: TCP port 9092 from all sources
    - Protocol: TCP port 9094 from all sources
-   - Protocol: TCP ports 2888–3888 from all sources
+   - Protocol: TCP ports 2888 - 3888 from all sources
    - All traffic to `kafka-sg` security group or VPC CIDR range
 
 2. Create EC2 instance
@@ -135,7 +135,8 @@ mv kafka.server.truststore.jks /home/ubuntu/kafka/ssl/private/kafka.server.trust
 
 # Copy the kafka.client.truststore.jks to your client
 scp ubuntu@172.31.33.0:/home/ubuntu/kafka/ssl/private/kafka.client.truststore.jks kafka.client.truststore.jks
-scp ubuntu@172.31.33.0:/home/ubuntu/kafka/ssl/private/kafka.client.keystore.jks kafka.client.keystore.jks
+scp ubuntu@172.31.33.0:/home/ubuntu/kafka/ssl/private/ca-cert ca-cert
+scp ubuntu@172.31.33.0:/home/ubuntu/kafka/ssl/private/ca-key ca-key
 ```
 
 2. Configure Brokers
@@ -196,7 +197,7 @@ bin/kafka-console-consumer.sh --bootstrap-server $BootstrapBrokerStringTLS --con
 ```
 
 ## Connect to Apache Kafka from Python using SSL
-1. Extract the keys
+1. Extract the keys on Client EC2
 ```bash
 ## overview of kafka.client.keystore.jks content
 keytool -list -rfc -keystore kafka.client.keystore.jks
