@@ -181,3 +181,5 @@ In the Data Catalog, edit the table and add the partitioning parameters `hashexp
 # Reference
 [How to access and analyze on-premises data stores using AWS Glue](https://aws.amazon.com/cn/blogs/china/quickly-build-an-aws-glue-based-extracting-cross-region-mysql-8-data-pipeline/)
 
+
+[Building AWS Glue Spark ETL jobs by bringing your own JDBC drivers for Amazon RDS](https://aws.amazon.com/cn/blogs/big-data/building-aws-glue-spark-etl-jobs-by-bringing-your-own-jdbc-drivers-for-amazon-rds/)

@@ -45,6 +45,8 @@ Architeture
 
 [Glue ingest MySQL8.0 via Glue connector](MySQL8.0-Glue-Demo.md)
 
+[Connect the RDS which SSL connection enabled](SSL-RDS-Connect.md)
+
 ## Data-On-Boarding-End2End-Demo
 
 ![end2end-data-onboarding](media/end2end-data-onboarding.png)
