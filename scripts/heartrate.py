@@ -33,14 +33,12 @@ while True:
     rnd = random.random()
     if (rnd < 0.1):
         data = json.dumps(getHighHeartRate())
-        print(data)
         response = iot.publish(
              topic='/health/heartrate',
              payload=data
          ) 
     else:
         data = json.dumps(getNormalHeartRate())
-        print(data)
         response = iot.publish(
              topic='/health/heartrate',
              payload=data

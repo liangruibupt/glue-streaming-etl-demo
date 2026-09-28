@@ -25,7 +25,7 @@ connection_mysql8_options = {
     #You need upload to S3
     "customJdbcDriverS3Path": args['jdbcS3path']+"mysql-connector-java-8.0.17.jar",
     "customJdbcDriverClassName": "com.mysql.cj.jdbc.Driver"}
-logger.info(connection_mysql8_options)
+logger.info({k: ('***' if k == 'password' else v) for k, v in connection_mysql8_options.items()})
 
 # Read from JDBC databases with custom driver
 df_warehouse = glueContext.create_dynamic_frame.from_options(
